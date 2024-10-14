@@ -1,16 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
 
-app.use(express.json());
+app.use(bodyParser.json()); // Assurez-vous d'avoir cette ligne
 
+// Définir l'endpoint POST /random
 app.post('/random', (req, res) => {
-    const { exclude } = req.body;
-    const numbers = Array.from({ length: 187 }, (_, i) => i + 1).filter(n => !exclude.includes(n));
-    const randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
-    res.json({ number: randomNumber });
+  console.log(req.body); // Affiche la requête reçue dans la console
+  res.send('Data received'); // Réponse pour le client
 });
 
-app.listen(port, () => {
-    console.log(`API running on http://localhost:${port}`);
+// Utiliser le port défini par l'environnement ou 3000 par défaut
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`API running on http://localhost:${PORT}`);
 });
